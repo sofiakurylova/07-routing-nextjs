@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { Note, NoteTag } from '@/types/note';
 
 const BASE_URL = 'https://notehub-public.goit.study/api';
-const TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
+const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNvZmlhLnZlbGlrYXVhQGdtYWlsLmNvbSIsImlhdCI6MTc3MzkwMjM3OX0.PPLYTwGz_rVs8ippd7EunmAzuwjQa0iV5rCbhrmi_JE';
 
 const api = axios.create({
   baseURL: BASE_URL,
