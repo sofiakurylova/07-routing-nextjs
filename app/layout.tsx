@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
-import QueryProvider from '@/components/QueryProvider/QueryProvider';
+import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import './globals.css';
@@ -19,12 +19,12 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
   return (
     <html lang="en">
       <body>
-        <QueryProvider>
+        <TanStackProvider>
           <Header />
           {children}
           {modal}
           <Footer />
-        </QueryProvider>
+        </TanStackProvider>
       </body>
     </html>
   );
