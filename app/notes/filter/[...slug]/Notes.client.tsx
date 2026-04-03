@@ -18,23 +18,30 @@ interface NotesClientProps {
 export default function NotesClient({ tag }: NotesClientProps) {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filterTag = tag === 'all' || !tag ? undefined : (tag as NoteTag);
 
-  const debouncedSearch = useDebouncedCallback((value: string) => {
-    setSearch(value);
+  const handleSearch = useDebouncedCallback((value: string) => {
+    setDebouncedSearch(value);
     setPage(1);
   }, 300);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['notes', filterTag, page, search],
-    queryFn: () => fetchNotes({ tag: filterTag, page, search }),
+    queryKey: ['notes', filterTag, page, debouncedSearch],
+    queryFn: () => fetchNotes({ tag: filterTag, page, search: debouncedSearch }),
   });
 
   return (
     <div>
-      <SearchBox onChange={debouncedSearch} />
+      <SearchBox
+        value={search}
+        onChange={(value) => {
+          setSearch(value);
+          handleSearch(value);
+        }}
+      />
       <button onClick={() => setIsModalOpen(true)}>Add note</button>
 
       {isLoading && <p>Loading...</p>}
