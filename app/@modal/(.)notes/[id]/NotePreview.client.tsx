@@ -28,6 +28,7 @@ export default function NotePreviewClient({ id }: NotePreviewClientProps) {
 
   return (
     <Modal onClose={handleClose}>
+      <button onClick={handleClose}>Close</button>
       <NotePreview note={note} />
     </Modal>
   );
