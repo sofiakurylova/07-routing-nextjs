@@ -1,7 +1,9 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNoteById } from '@/lib/api';
+import Modal from '@/components/Modal/Modal';
 import NotePreview from '@/components/NotePreview/NotePreview';
 
 interface NotePreviewClientProps {
@@ -9,14 +11,24 @@ interface NotePreviewClientProps {
 }
 
 export default function NotePreviewClient({ id }: NotePreviewClientProps) {
+  const router = useRouter();
+
   const { data: note, isLoading, error } = useQuery({
     queryKey: ['note', id],
     queryFn: () => fetchNoteById(id),
     refetchOnMount: false,
   });
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error || !note) return <p>Something went wrong.</p>;
+  const handleClose = () => {
+    router.back();
+  };
 
-  return <NotePreview note={note} />;
+  if (isLoading) return null;
+  if (error || !note) return null;
+
+  return (
+    <Modal onClose={handleClose}>
+      <NotePreview note={note} />
+    </Modal>
+  );
 }
